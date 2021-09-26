@@ -29,9 +29,48 @@ const reviews = [
     text: "Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic. ",
   },
 ];
+const author = document.getElementById("author");
+const info = document.getElementById("info");
+const job = document.getElementById("job");
+const img = document.getElementById("person-img");
+const btns = document.querySelector(".button-container");
+const randBtn = document.querySelector(".random-btn");
+let count = 0;
 
-const author = document.getElementsById("author");
-const info = document.getElementsById("info");
-const job = document.getElementsById("job");
-const img = document.getElementsById("person-img");
-const btns = document.getElementsById("btn-container");
+const setData = () => {
+  author.textContent = reviews[count].name;
+  job.textContent = reviews[count].job;
+  info.textContent = reviews[count].text;
+  img.setAttribute("src", reviews[count].img);
+};
+
+const changeData = (event) => {
+  if (event.target.classList.contains("fa-chevron-left")) {
+    count--;
+    if (count < 0) {
+      count = reviews.length - 1;
+    }
+    setData();
+  }
+
+  if (event.target.classList.contains("fa-chevron-right")) {
+    count++;
+    if (count > reviews.length - 1) {
+      count = 0;
+    }
+    setData();
+  }
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  setData();
+});
+
+btns.addEventListener("click", (event) => {
+  changeData(event);
+});
+
+randBtn.addEventListener("click", (event) => {
+  count = Math.floor(Math.random() * reviews.length);
+  setData();
+});
